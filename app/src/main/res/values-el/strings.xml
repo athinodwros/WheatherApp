@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Εφαρμογή καιρού</string>
+    <string name="hello_weather_app">Γειά σου εφαρμογή καιρού</string>
+    <string name="btn_show_weather">Δείξε μου τον καιρό</string>
+    <string name="alert_title_null_location">Δεν υπάρχει περιοχή</string>
+    <string name="alert_message_null_location">Δεν καταφέραμε να βρούμε την τοποθεσία σου. Παρακαλούμε δοκίμασε ξανά.</string>
+    <string name="details">Λεπτομέριες</string>
+</resources>

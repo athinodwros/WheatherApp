@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WheatherApp</string>
+    <string name="hello_weather_app">Hello Weather App</string>
+    <string name="btn_show_weather">Show me the weather</string>
+    <string name="alert_title_null_location">Location is null</string>
+    <string name="alert_message_null_location">We couldn\'t retrieve your current location, please try again!</string>
+    <string name="details">Details</string>
+</resources>
