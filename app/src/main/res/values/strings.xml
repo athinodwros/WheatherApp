@@ -1,8 +1,24 @@
 <resources>
     <string name="app_name">WheatherApp</string>
     <string name="hello_weather_app">Hello Weather App</string>
-    <string name="btn_show_weather">Show me the weather</string>
+    <string name="btn_show_current_location_weather">Show me the weather for current location</string>
+    <string name="btn_show_weather_for_coords">Show me the weather for the given coords</string>
     <string name="alert_title_null_location">Location is null</string>
     <string name="alert_message_null_location">We couldn\'t retrieve your current location, please try again!</string>
     <string name="details">Details</string>
+    <string name="no_response_for_this_coordinates">No data found. Please try again with different coordinates.</string>
+    <string name="weathers_condition_now">Weathers condition now</string>
+    <string name="chill">chill</string>
+    <string name="direction">direction</string>
+    <string name="speed">speed</string>
+    <string name="sunrise">sunrise</string>
+    <string name="sunset">sunset</string>
+    <string name="humidity">humidity</string>
+    <string name="pressure">pressure</string>
+    <string name="rising">rising</string>
+    <string name="visibility">visibility</string>
+    <string name="wind_conditions">"Wind conditions: "</string>
+    <string name="atmosphere_label">"Atmosphere: "</string>
+    <string name="astronomy_label">"Astronomy: "</string>
+    <string name="daily_weather_forecast">Daily weather forecast</string>
 </resources>

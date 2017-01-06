@@ -3,11 +3,13 @@ package com.example.athensgift.wheatherapp.Model.WeatherModels.Forecast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by Fafoutis Athinodoros on 06/01/2017.
  */
 
-public class ItemForecastDay {
+public class ItemForecastDay implements Serializable {
     public String code;
     public String date;
     public String day;

@@ -1,8 +1,24 @@
 <resources>
     <string name="app_name">Εφαρμογή καιρού</string>
     <string name="hello_weather_app">Γειά σου εφαρμογή καιρού</string>
-    <string name="btn_show_weather">Δείξε μου τον καιρό</string>
+    <string name="btn_show_current_location_weather">Δείξε μου τον καιρό στην τωρινή τοποθεσία</string>
+    <string name="btn_show_weather_for_coords">Δείξε μου τον καιρό στις συντεταγμένες</string>
     <string name="alert_title_null_location">Δεν υπάρχει περιοχή</string>
     <string name="alert_message_null_location">Δεν καταφέραμε να βρούμε την τοποθεσία σου. Παρακαλούμε δοκίμασε ξανά.</string>
     <string name="details">Λεπτομέριες</string>
+    <string name="no_response_for_this_coordinates">Δεν βρέθηκαν δεδομένα για αυτές τις συντεταγμένες. Παρακαλούμε δοκιμάστε ξανά με άλλες συντεταγμένες.</string>
+    <string name="weathers_condition_now">Ο καιρός τώρα.</string>
+    <string name="chill">κρυάδα</string>
+    <string name="direction">κατεύθυνση</string>
+    <string name="speed">ταχύτητα</string>
+    <string name="sunrise">ανατολή</string>
+    <string name="sunset">δύση</string>
+    <string name="humidity">ομίχλη</string>
+    <string name="pressure">πίεση</string>
+    <string name="rising">έγερση</string>
+    <string name="visibility">ορατότητα</string>
+    <string name="wind_conditions">"Άνεμος: "</string>
+    <string name="atmosphere_label">"Ατμόσφαιρα: "</string>
+    <string name="astronomy_label">"Αστρονομία: "</string>
+    <string name="daily_weather_forecast">Καθημερινή πρόβλεψη</string>
 </resources>

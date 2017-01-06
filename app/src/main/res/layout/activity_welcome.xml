@@ -10,6 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.athensgift.wheatherapp.WelcomeActivity">
 
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,11 +27,48 @@
         android:id="@+id/textView" />
 
     <Button
-        android:text="@string/btn_show_weather"
+        android:text="@string/btn_show_current_location_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/show_me_the_weather_button"
+        android:id="@+id/weather_current_location_button"
         android:onClick="goToWeatherActivity"/>
+
+    <Button
+        android:text="@string/btn_show_weather_for_coords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather_current_location_button"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/weather_coords_location_button"
+        android:onClick="goToWeatherActivityWithCoordinates"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/weather_coords_location_button" >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="10"
+            android:id="@+id/editLatText"
+            android:textAlignment="center"
+            android:hint="lat"
+            android:layout_weight="1" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned|numberDecimal"
+            android:ems="10"
+            android:id="@+id/editLongText"
+            android:textAlignment="center"
+            android:hint="lon"
+            android:layout_weight="1" />
+    </LinearLayout>
 </RelativeLayout>

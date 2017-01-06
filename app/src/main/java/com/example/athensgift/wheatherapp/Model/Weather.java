@@ -32,7 +32,11 @@ public class Weather {
         try {
             // Load data
             JSONObject json = new JSONObject(jsonString);
-            JSONObject channel = json.optJSONObject("query").optJSONObject("results").optJSONObject("channel");
+            JSONObject results = json.optJSONObject("query").optJSONObject("results");
+
+            if (results==null) {return null;}
+
+            JSONObject channel = results.optJSONObject("channel");
 
             weather.units = Units.getUnitsFromJson(channel.optJSONObject("units"));
             weather.title = channel.getString("title");
@@ -49,6 +53,8 @@ public class Weather {
             weather.item = Item.getItemFromJson(channel.optJSONObject("item"));
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 

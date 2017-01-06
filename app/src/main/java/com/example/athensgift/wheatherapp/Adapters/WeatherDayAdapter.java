@@ -8,11 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.athensgift.wheatherapp.Global;
 import com.example.athensgift.wheatherapp.Model.WeatherModels.Forecast.ItemForecastDay;
 import com.example.athensgift.wheatherapp.R;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import it.sephiroth.android.library.picasso.Picasso;
 
@@ -49,34 +49,44 @@ public class WeatherDayAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = mInflater.inflate(R.layout.list_item_weather_day, parent, false);
+        ViewHolder holder;
 
-        TextView titleTextView = (TextView) rowView.findViewById(R.id.weather_day_list_title);
-        TextView subTitleTextView = (TextView) rowView.findViewById(R.id.weather_day_list_subtitle);
-        TextView details = (TextView) rowView.findViewById(R.id.weather_day_list_detail);
-        ImageView thumbnailImageView = (ImageView) rowView.findViewById(R.id.weather_day_list_thumbnail);
+        if(convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_weather_day, parent, false);
+
+            holder = new ViewHolder();
+            holder.titleTextView = (TextView) convertView.findViewById(R.id.weather_day_list_title);
+            holder.subtitleTextView = (TextView) convertView.findViewById(R.id.weather_day_list_subtitle);
+            holder.detailTextView = (TextView) convertView.findViewById(R.id.weather_day_list_detail);
+            holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.weather_day_list_thumbnail);
+
+            convertView.setTag(holder);
+        }
+        else{
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        TextView titleTextView = holder.titleTextView;
+        TextView subtitleTextView = holder.subtitleTextView;
+        TextView detailTextView = holder.detailTextView;
+        ImageView thumbnailImageView = holder.thumbnailImageView;
 
         ItemForecastDay itemForecastDay = (ItemForecastDay) getItem(position);
+
         titleTextView.setText(itemForecastDay.day+" "+itemForecastDay.date);
-        subTitleTextView.setText(itemForecastDay.text);
-        details.setText(itemForecastDay.low+"-"+itemForecastDay.high);
-        String[] images = {"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clouds-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clear-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-showers-day-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-showers-scattered-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-snow-scattered-day-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clouds-night-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-many-clouds-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-showers-scattered-day-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-snow-scattered-night-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-hail-icon.png"
-                ,"http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-showers-icon.png"};
+        subtitleTextView.setText(itemForecastDay.text);
+        detailTextView.setText(itemForecastDay.low+"-"+itemForecastDay.high);
 
-        Random r = new Random();
-        int i = r.nextInt(11);
+        String imageUrl = Global.wheatherImages.get(itemForecastDay.text);
+        Picasso.with(mContext).load(imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 
-        Picasso.with(mContext).load(images[i]).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
+        return convertView;
+    }
 
-        return rowView;
+    private static class ViewHolder {
+        public TextView titleTextView;
+        public TextView subtitleTextView;
+        public TextView detailTextView;
+        public ImageView thumbnailImageView;
     }
 }

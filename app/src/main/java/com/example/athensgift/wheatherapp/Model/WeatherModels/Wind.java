@@ -1,5 +1,9 @@
 package com.example.athensgift.wheatherapp.Model.WeatherModels;
 
+import android.content.Context;
+
+import com.example.athensgift.wheatherapp.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +28,10 @@ public class Wind {
         }
 
         return wind;
+    }
+
+    public String toString(Context ctx) {
+        return ctx.getString(R.string.wind_conditions)+ctx.getString(R.string.chill)+": "+chill.toString()+", "+ctx.getString(R.string.direction)+": "+direction.toString()+", "+ctx.getString(R.string.speed)+": "+speed.toString();
     }
 }
 

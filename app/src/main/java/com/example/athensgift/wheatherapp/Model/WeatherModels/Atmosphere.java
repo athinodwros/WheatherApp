@@ -1,5 +1,9 @@
 package com.example.athensgift.wheatherapp.Model.WeatherModels;
 
+import android.content.Context;
+
+import com.example.athensgift.wheatherapp.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,5 +31,9 @@ public class Atmosphere {
         }
 
         return atmosphere;
+    }
+
+    public String toString(Context ctx) {
+        return ctx.getString(R.string.atmosphere_label)+ctx.getString(R.string.humidity)+": "+humidity.toString()+", "+ctx.getString(R.string.pressure)+": "+pressure.toString()+", "+ctx.getString(R.string.rising)+": "+rising.toString()+", "+ctx.getString(R.string.visibility)+": "+visibility.toString();
     }
 }

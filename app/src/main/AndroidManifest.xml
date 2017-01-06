@@ -3,7 +3,7 @@
     package="com.example.athensgift.wheatherapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,10 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherForecastActivity"></activity>
+        <activity android:name=".WeatherForecastActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBnRXZDnc7FXYdyw8ByPrTHdmrkVjt1rak"/>
+            android:value="AIzaSyBnRXZDnc7FXYdyw8ByPrTHdmrkVjt1rak" />
+
+        <activity android:name=".WeatherActivity"></activity>
     </application>
 
 </manifest>
