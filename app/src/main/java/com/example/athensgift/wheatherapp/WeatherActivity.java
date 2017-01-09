@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.athensgift.wheatherapp.Model.Weather;
+import com.example.athensgift.wheatherapp.Providers.SingleShotLocationProvider;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -52,12 +53,31 @@ public class WeatherActivity extends AppCompatActivity implements OnMapReadyCall
     private Double lat;
     private Double lon;
     private Weather weather;
-    LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        errorTextView = (TextView) findViewById(R.id.listErrorMessage);
+        weatherTitle = (TextView) findViewById(R.id.weathers_title);
+        weathersWind = (TextView) findViewById(R.id.weathers_wind);
+        weathersAtmosphere = (TextView) findViewById(R.id.weathers_atmosphere);
+        weathersAstronomy = (TextView) findViewById(R.id.weathers_astronomy);
+        weatherDayListThumbnail = (ImageView) findViewById(R.id.weather_day_list_thumbnail);
+        weathersDetails = (TextView) findViewById(R.id.weather_day_list_detail);
+        weathersNowTitle = (TextView) findViewById(R.id.weather_day_list_title);
+        weathersNowSubtitle = (TextView) findViewById(R.id.weather_day_list_subtitle);
+        weathersNowLabel = (TextView) findViewById(R.id.weathers_now_label);
+        dailyWeatherForecastButton = (Button) findViewById(R.id.daily_weather_forecast_button);
+
+        if (!isOnline()){
+            errorTextView.setText(R.string.internet_connection_error);
+            errorTextView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
 
         weather = new Weather();
         areCustomCoordinates = false;
@@ -78,40 +98,31 @@ public class WeatherActivity extends AppCompatActivity implements OnMapReadyCall
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        errorTextView = (TextView) findViewById(R.id.listErrorMessage);
-        weatherTitle = (TextView) findViewById(R.id.weathers_title);
-        weathersWind = (TextView) findViewById(R.id.weathers_wind);
-        weathersAtmosphere = (TextView) findViewById(R.id.weathers_atmosphere);
-        weathersAstronomy = (TextView) findViewById(R.id.weathers_astronomy);
-        weatherDayListThumbnail = (ImageView) findViewById(R.id.weather_day_list_thumbnail);
-        weathersDetails = (TextView) findViewById(R.id.weather_day_list_detail);
-        weathersNowTitle = (TextView) findViewById(R.id.weather_day_list_title);
-        weathersNowSubtitle = (TextView) findViewById(R.id.weather_day_list_subtitle);
-        weathersNowLabel = (TextView) findViewById(R.id.weathers_now_label);
-        dailyWeatherForecastButton = (Button) findViewById(R.id.daily_weather_forecast_button);
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(final GoogleMap map) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
         if (areCustomCoordinates) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 7.0f));
-        } else if (location != null) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 7.0f));
-            new WeatherActivity.getWeatherFromUrl().execute("https://simple-weather.p.mashape.com/weatherdata?lat=" + location.getLatitude() + "&lng=" + location.getLongitude());
-        } else {
-            showSimpleAlert(getResources().getString(R.string.alert_title_null_location),getResources().getString(R.string.alert_message_null_location));
+        }
+        else{
+            SingleShotLocationProvider.requestSingleUpdate(this,
+                    new SingleShotLocationProvider.LocationCallback() {
+                        @Override public void onNewLocationAvailable(SingleShotLocationProvider.GPSCoordinates location) {
+                            if (location != null) {
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude, location.longitude), 7.0f));
+                                new WeatherActivity.getWeatherFromUrl().execute("https://simple-weather.p.mashape.com/weatherdata?lat=" + location.latitude + "&lng=" + location.longitude);
+                            } else {
+                                showSimpleAlert(getResources().getString(R.string.alert_title_null_location),getResources().getString(R.string.alert_message_null_location));
+                            }
+                        }
+                    });
         }
     }
-
 
     public void showDailyForecast(View view) {
         Intent intent = new Intent(this, WeatherForecastActivity.class);
@@ -169,8 +180,8 @@ public class WeatherActivity extends AppCompatActivity implements OnMapReadyCall
         protected void onPostExecute(String result) {
             weather = Weather.getWeatherFromJson(result);
 
-            if (weather!=null){
-                WeatherActivity.this.setTitle(weather.item.title);
+            if (weather!=null && weather.item != null){
+                WeatherActivity.this.setTitle(weather.location.city+", "+weather.location.region+", "+weather.location.country);
 
                 weatherTitle.setText(weather.item.title);
                 weathersWind.setText(weather.wind.toString(WeatherActivity.this));
@@ -210,6 +221,13 @@ public class WeatherActivity extends AppCompatActivity implements OnMapReadyCall
                     }
                 });
         alertDialog.show();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
     //endregion
 }

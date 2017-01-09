@@ -7,7 +7,7 @@
     <string name="alert_message_null_location">We couldn\'t retrieve your current location, please try again!</string>
     <string name="details">Details</string>
     <string name="no_response_for_this_coordinates">No data found. Please try again with different coordinates.</string>
-    <string name="weathers_condition_now">Weathers condition now</string>
+    <string name="weathers_condition_now">Conditions now</string>
     <string name="chill">chill</string>
     <string name="direction">direction</string>
     <string name="speed">speed</string>
@@ -21,4 +21,5 @@
     <string name="atmosphere_label">"Atmosphere: "</string>
     <string name="astronomy_label">"Astronomy: "</string>
     <string name="daily_weather_forecast">Daily weather forecast</string>
+    <string name="internet_connection_error">Please check your internet connection and try again</string>
 </resources>

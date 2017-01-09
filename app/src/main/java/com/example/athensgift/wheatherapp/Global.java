@@ -1,5 +1,9 @@
 package com.example.athensgift.wheatherapp;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.util.HashMap;
 
 /**
@@ -17,5 +21,7 @@ public class Global {
         put("Cloudy", "http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-many-clouds-icon.png");
         put("Rain And Snow", "http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-hail-icon.png");
         put("Mostly Sunny", "http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clear-icon.png");
+        put("Sunny", "http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-clear-icon.png");
+        put("Snow Showers", "http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/128/Status-weather-snow-scattered-night-icon.png");
     }};
 }
